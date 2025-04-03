@@ -12,6 +12,16 @@ namespace MeetingPoint_AG_Service
             // Add services to the container.
             builder.Services.AddControllers();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             // Swagger hinzufügen
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -32,6 +42,8 @@ namespace MeetingPoint_AG_Service
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
